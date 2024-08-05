@@ -19,4 +19,10 @@ fn main() {
     println!("{spaces}");
     spaces = spaces.len();
     println!("{spaces}");
+
+    let a = 5;
+    let b = 5;
+    println!("{a} is {}", b);
 }
+
+
