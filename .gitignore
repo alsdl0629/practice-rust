@@ -1,7 +1,6 @@
-/target
+*/target
 
-hello_cargo/.idea
-
-Cargo.lock
+*/.idea
+.idea
 
 **/*.rs.bk
