@@ -1,3 +1,5 @@
+use reqwest;
+
 pub fn convert_temperature_unit(temperature: String) -> f64 {
     let temperature = temperature.trim();
 
@@ -27,9 +29,16 @@ fn convert_fahrenheit_to_celsius(temperature: &str) -> f64 {
 
     let result = (temperature - 32f64) * 5f64 / 9f64;
 
-    return result
+    return result;
 }
 
-fn get_current_temperature() {
+pub async fn get_current_temperature() {
+    let result = reqwest::get("https://~~")
+        .await
+        .unwrap()
+        .text()
+        .await
+        .unwrap();
 
+    println!("{result}");
 }
