@@ -6,7 +6,9 @@ use std::error::Error;
 pub fn run(config: Args) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?; // 파일 열기
 
-    println!("With text:\n{contents}");
+    for line in search(&config.query, &contents) {
+        println!("{line}");
+    }
 
     Ok(()) // 에러 처리만 하겠다는 뜻
 }
@@ -26,5 +28,34 @@ impl Args {
         let file_path = args[2].clone();
 
         return Ok(Args { query, file_path })
+    }
+}
+
+// 반환된 데이터가 contents 만큼 오래 살 것
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    let mut results = Vec::new();
+
+    for line in contents.lines() {
+        if line.contains(query) {
+            results.push(line);
+        }
+    }
+
+    results
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn one_result() {
+        let query = "duct";
+        let contents = "\
+Rust:
+safe, fast, productive.
+Pick three.";
+
+        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
     }
 }
